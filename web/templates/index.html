@@ -1,0 +1,8 @@
+{{ define "content" }}
+
+<h1>Welcome to My Go App</h1>
+<div></div>
+<div hx-get="/api/html/helloworld" hx-trigger="load"></div>
+<div hx-get="/api/html/second" hx-trigger="load delay:2s"></div>
+
+{{ end }}
