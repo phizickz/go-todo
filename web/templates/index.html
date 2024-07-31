@@ -1,8 +1,28 @@
 {{ define "content" }}
 
 <h1>Welcome to My Go App</h1>
-<div></div>
-<div hx-get="/api/html/helloworld" hx-trigger="load"></div>
-<div hx-get="/api/html/second" hx-trigger="load delay:2s"></div>
-
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <form>
+                <input type="text" name="title" placeholder="Title"/>
+                <input type="text" name="body" placeholder="Body"/>
+                <button hx-post="/api/card" hx-target="#todos-list">
+                    Submit
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="card">
+        <div  class="card-body">
+            <div hx-trigger="cardCreated" hx-get="/api/card">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div hx-get="/test/abc" hx-trigger="keyup" hx-vals='js:{lastKey: event.key}'>
+    <input type="text" />
+</div> -->
 {{ end }}
