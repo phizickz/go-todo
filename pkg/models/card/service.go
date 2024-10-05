@@ -8,6 +8,7 @@ import (
 // func GetCard(id int) {
 
 // }
+
 func writeToFile(file string, data string) {
 	if _, err := os.Stat(file); os.IsNotExist(err) {
 		os.Create(file)
