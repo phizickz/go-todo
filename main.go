@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"go-todo/pkg/handlers"
-	"go-todo/pkg/models/card"
 )
 
 func main() {
@@ -15,9 +14,6 @@ func main() {
 	http.Handle("/test", http.NotFoundHandler())
 	http.HandleFunc("/test/", handlers.ApiTesting)
 	
-	http.Handle("/api", http.NotFoundHandler())
-	http.HandleFunc("/api/card", handlers.CardApi)
-	card.NewCard("abc","def")
 	log.Println("Starting server on :8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
