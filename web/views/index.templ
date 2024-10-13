@@ -1,0 +1,27 @@
+package views
+
+templ root() {
+    @layout(body("abcd"))
+}
+
+templ heading() {
+    <h1>My ToDo list</h1>
+}
+
+templ layout(contents templ.Component) {
+
+    <div id="heading">
+        @heading()
+    </div>
+    
+    <div id="contents">
+        @contents
+    </div>
+
+    
+}
+
+templ body(contents string) {
+    <p> {contents} </p>
+}
+
