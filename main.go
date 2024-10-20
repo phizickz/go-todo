@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	http.Handle("/", templ.Handler(views.root()))
+	http.Handle("/", templ.Handler(views.Root()))
 	//http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./web/static"))))
 
 	//http.Handle("/test", http.NotFoundHandler())

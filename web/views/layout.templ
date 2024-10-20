@@ -1,6 +1,6 @@
 package views
 
-templ root() {
+templ Root() {
     @layout(body("abcd"))
 }
 
@@ -20,8 +20,3 @@ templ layout(contents templ.Component) {
 
     
 }
-
-templ body(contents string) {
-    <p> {contents} </p>
-}
-
