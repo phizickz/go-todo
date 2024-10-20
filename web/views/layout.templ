@@ -1,18 +1,15 @@
 package views
 
-templ Root() {
-    @index("abcd")
-}
 
-templ index(contents string) {
+templ layout(view templ.Component) {
 <!DOCTYPE html>
 <html lang="en">
-@layout()
-@body(contents)
+@head()
+@view
 </html>
 }
 
-templ layout() {
+templ head() {
 
 <head>
     <meta charset="UTF-8">
@@ -30,3 +27,4 @@ templ layout() {
 </head>
     
 }
+
