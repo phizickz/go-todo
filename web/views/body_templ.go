@@ -29,7 +29,7 @@ func body(contents string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<body data-bs-theme=\"dark\"><h1>Welcome to My Go App</h1><div class=\"row\"><div class=\"card\"><div class=\"card-body\"><form><input type=\"text\" name=\"title\" placeholder=\"Title\"> <input type=\"text\" name=\"body\" placeholder=\"Body\"> <button hx-post=\"/api/card\" hx-target=\"#todos-list\">Submit</button></form></div></div></div><div class=\"row\"><div class=\"card\"><div class=\"card-body\"><div hx-trigger=\"cardCreated\" hx-get=\"/api/card\"></div></div></div></div></body>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<body data-bs-theme=\"dark\"><div class=\"container\"><h1>Welcome to My Go App</h1><div class=\"row\"><div class=\"card\"><div class=\"card-body\"><form><input type=\"text\" name=\"title\" placeholder=\"Title\"> <input type=\"text\" name=\"body\" placeholder=\"Body\"> <button hx-post=\"/api/card\" hx-target=\"#todos-list\">Submit</button></form></div></div></div><div class=\"row\"><div class=\"card\"><div class=\"card-body\"><div hx-trigger=\"cardCreated\" hx-get=\"/api/card\"></div></div></div></div></div></body>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

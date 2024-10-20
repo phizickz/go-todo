@@ -26,7 +26,3 @@ func ApiTesting(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r.Form)
 }
 
-func Home(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles(templateRoot+"layout.html", templateRoot+"index.html"))
-	tmpl.Execute(w, nil)
-}
