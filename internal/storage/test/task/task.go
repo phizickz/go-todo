@@ -2,7 +2,7 @@ package task
 
 import (
 	"fmt"
-	"go-todo/entities/task"
+	taskEntity "go-todo/internal/entities/task"
 )
 
 type TaskRepository struct {
@@ -12,16 +12,18 @@ type TaskRepository struct {
 func (r *TaskRepository) Create(task *taskEntity.Task) {
 	r.tasks = append(r.tasks, task)
 }
-func (r *TaskRepository) FindByID(id int) (*Task, error) {
+
+func (r *TaskRepository) FindByID(id int) (*taskEntity.Task, error) {
 	for _, task := range r.tasks {
-	if task.ID == id {
-		return &task, nil
-	}
+		if task.ID == id {
+			return &task, nil
+		}
 	}
 	return nil, fmt.Errorf("Task with ID %d not found", id)
 }
 
 func NewTaskRepository() *TaskRepository {
-	return &TaskRepository {
-		tasks: make([]Task, 0),
-	}}
+	return &TaskRepository{
+		tasks: make([]taskEntity.Task, 0),
+	}
+}
