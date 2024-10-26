@@ -13,7 +13,7 @@ func (s TaskService) Create(task *taskEntity.Task) error {
 	return nil
 }
 
-func (s TaskService) Update(task *taskEntity.Task) error {
+func (s TaskService) FindByID(task *taskEntity.Task) error {
 	return nil
 }
 
