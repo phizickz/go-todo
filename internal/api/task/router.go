@@ -4,6 +4,6 @@ import (
 	"net/http"
 )
 
-func RegisterRoutes(mux *http.ServeMux, service TaskService) {
-	handler := NewTaskController(service)
+func (c *TaskController) RegisterRoutes(mux *http.ServeMux) {
+	mux.HandleFunc("/tasks", c.GetAllTasks)
 }
