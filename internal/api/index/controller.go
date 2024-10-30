@@ -9,4 +9,5 @@ func NewIndexController() *IndexController {
 }
 
 func (c *IndexController) ServeIndex(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("<div>HELLO</div>"))
 }

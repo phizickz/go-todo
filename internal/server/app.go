@@ -2,8 +2,8 @@ package server
 
 import (
 	indexController "go-todo/internal/api/index"
-	//	taskController "go-todo/internal/api/task"
-	//	taskService "go-todo/internal/service/task"
+	taskController "go-todo/internal/api/task"
+	taskService "go-todo/internal/service/task"
 	"net/http"
 )
 
@@ -19,12 +19,12 @@ type Server struct {
 func NewServer() *Server {
 	indexCon := indexController.NewIndexController()
 
-	//	taskSer := taskService.NewTaskService()
-	//	taskCon := taskController.NewTaskController(taskSer)
+	taskSer := taskService.NewTaskService()
+	taskCon := taskController.NewTaskController(taskSer)
 
 	controllers := []Controller{
 		indexCon,
-		// taskCon,
+		taskCon,
 	}
 
 	return &Server{
@@ -33,8 +33,8 @@ func NewServer() *Server {
 	}
 }
 
-func (s *Server) RegisterRoutes() {
+func (s *Server) RegisterRoutes(mux *http.ServeMux) {
 	for _, controller := range s.Controllers {
-		controller.RegisterRoutes(s.Mux)
+		controller.RegisterRoutes(mux)
 	}
 }

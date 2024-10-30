@@ -5,5 +5,5 @@ import (
 )
 
 func (c *TaskController) RegisterRoutes(mux *http.ServeMux) {
-	mux.HandleFunc("/tasks", c.GetAllTasks)
+	mux.Handle("/tasks", http.HandlerFunc(c.GetAllTasks))
 }

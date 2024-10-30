@@ -1,15 +1,16 @@
 package main
 
 import (
-	"go-todo/web/views"
+	"go-todo/internal/server"
 	"log"
 	"net/http"
-
-	"github.com/a-h/templ"
 )
 
 func main() {
-	http.Handle("/", templ.Handler(views.Index()))
+	mux := http.NewServeMux()
+	app := server.NewServer()
+	app.RegisterRoutes(mux)
+
 	log.Println("Starting server on :8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8080", mux))
 }
