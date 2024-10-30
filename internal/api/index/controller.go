@@ -1,6 +1,11 @@
 package index
 
-import "net/http"
+import (
+	"go-todo/web/views"
+	"net/http"
+
+	"github.com/a-h/templ"
+)
 
 type IndexController struct{}
 
@@ -9,5 +14,6 @@ func NewIndexController() *IndexController {
 }
 
 func (c *IndexController) ServeIndex(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("<div>HELLO</div>"))
+	handler := templ.Handler(views.Index())
+	handler.ServeHTTP(w, r)
 }
