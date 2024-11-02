@@ -7,34 +7,22 @@ import (
 	"net/http"
 )
 
-type Controller interface {
-	RegisterRoutes(mux *http.ServeMux)
-}
+type Controller interface{}
 
 type Server struct {
-	Mux         *http.ServeMux
-	Controllers []Controller
+	Mux *http.ServeMux
 }
 
-func NewServer() *Server {
+func NewServer(mux *http.ServeMux) *Server {
 	indexCon := indexController.NewIndexController()
 
 	taskSer := taskService.NewTaskService()
 	taskCon := taskController.NewTaskController(taskSer)
 
-	controllers := []Controller{
-		indexCon,
-		taskCon,
-	}
+	mux.Handle("/", http.HandlerFunc(indexCon.ServeIndex))
+	mux.Handle("/tasks", http.HandlerFunc(taskCon.GetAllTasks))
 
 	return &Server{
-		Mux:         http.NewServeMux(),
-		Controllers: controllers,
-	}
-}
-
-func (s *Server) RegisterRoutes(mux *http.ServeMux) {
-	for _, controller := range s.Controllers {
-		controller.RegisterRoutes(mux)
+		Mux: http.NewServeMux(),
 	}
 }

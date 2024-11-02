@@ -32,20 +32,6 @@ func (c *TaskController) CreateTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func (c *TaskController) GetAllTasks(w http.ResponseWriter, r *http.Request) {
-	task := []taskEntity.Task{
-		{
-			Title: "abc",
-			Body:  "def",
-		},
-		{
-			Title: "hello",
-			Body:  "world",
-		},
-		{
-			Title: "my third",
-			Body:  "card",
-		},
-	}
-	handler := templ.Handler(views.Tasks(task))
+	handler := templ.Handler(views.Tasks(c.service.GetAll()))
 	handler.ServeHTTP(w, r)
 }

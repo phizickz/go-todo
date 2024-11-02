@@ -1,19 +1,16 @@
 package views
 
-import ("go-todo/internal/entities/task")
+import "go-todo/internal/entities/task"
 
 templ Tasks(tasks []task.Task) {
-    for _, t := range tasks{
-    <div class="card col-6">
-      <div class="card-header">
-        <h1>{t.Title}</h1>
-      </div>
-      <div class="card-body">
-        {t.Body}
-      </div>
-    </div>
-
-      }
-
-  }
-
+	for _, t := range tasks {
+		<div class="card col-6">
+			<div class="card-header">
+				<h1>{ t.Title }</h1>
+			</div>
+			<div class="card-body">
+				{ t.Body }
+			</div>
+		</div>
+	}
+}
