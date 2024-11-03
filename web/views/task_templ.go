@@ -32,7 +32,7 @@ func Tasks(tasks []task.Task) templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		for _, t := range tasks {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"card col-6\"><div class=\"card-header\"><h1>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"card mt-2\"><div class=\"card-header\"><h1>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

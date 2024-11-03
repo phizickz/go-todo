@@ -58,7 +58,7 @@ func indexBody() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<body data-bs-theme=\"dark\"><div class=\"container\"><h1>Welcome to My Go App</h1><div class=\"row\"><div class=\"card\"><div class=\"card-body\"><form><input type=\"text\" name=\"title\" placeholder=\"Title\"> <input type=\"text\" name=\"body\" placeholder=\"Body\"> <button hx-post=\"/api/card\" hx-target=\"#todos-list\">Submit</button></form></div></div></div><div class=\"row\" id=\"todos-list\" hx-get=\"/tasks\" hx-trigger=\"load\"></div></div></body>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<body data-bs-theme=\"dark\"><div class=\"container\"><h1>Welcome to My Go App</h1><div class=\"row col-8\"><div class=\"card\"><div class=\"card-body\"><form><input type=\"text\" name=\"title\" placeholder=\"Title\"> <input type=\"text\" name=\"body\" placeholder=\"Body\"> <button hx-post=\"/task/create\" hx-swap=\"none\">Submit</button> <span id=\"task-created-message\" hx-trigger=\"task-created from:body\" _hyperscript=\"show; wait 3s; hide\" style=\"display: none; color: green\">Task created!</span></form></div></div></div><div class=\"row col-8\" id=\"todos-list\" hx-get=\"/task/all\" hx-trigger=\"load, task-created from:body\"></div></div></body>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

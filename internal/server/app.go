@@ -19,8 +19,9 @@ func NewServer(mux *http.ServeMux) *Server {
 	taskSer := taskService.NewTaskService()
 	taskCon := taskController.NewTaskController(taskSer)
 
-	mux.Handle("/", http.HandlerFunc(indexCon.ServeIndex))
-	mux.Handle("/tasks", http.HandlerFunc(taskCon.GetAllTasks))
+	mux.HandleFunc("GET /", indexCon.ServeIndex)
+	mux.HandleFunc("GET /task/all", taskCon.GetAllTasks)
+	mux.HandleFunc("POST /task/create", taskCon.CreateTask)
 
 	return &Server{
 		Mux: http.NewServeMux(),

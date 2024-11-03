@@ -4,7 +4,7 @@ import "go-todo/internal/entities/task"
 
 templ Tasks(tasks []task.Task) {
 	for _, t := range tasks {
-		<div class="card col-6">
+		<div class="card mt-2">
 			<div class="card-header">
 				<h1>{ t.Title }</h1>
 			</div>

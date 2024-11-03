@@ -5,32 +5,35 @@ import (
 )
 
 type TaskService struct {
-	tasks []taskEntity.Task
+	tasks map[int]taskEntity.Task
 }
 
 func (s *TaskService) Create(task taskEntity.Task) {
-	s.tasks[len(s.tasks)] = task
+	s.tasks[len(s.tasks)] = taskEntity.Task{
+		Title: task.Title,
+		Body:  task.Body,
+	}
 }
 
-func (s *TaskService) GetAll() []taskEntity.Task {
+func (s *TaskService) GetAll() map[int]taskEntity.Task {
 	return s.tasks
 }
 
 func NewTaskService() *TaskService {
-	tasks := []taskEntity.Task{
-		{
-			Title: "abc",
-			Body:  "def",
-		},
-		{
-			Title: "hello",
-			Body:  "world",
-		},
-		{
-			Title: "my third",
-			Body:  "card",
-		},
+	tasks := make(map[int]taskEntity.Task)
+	tasks[len(tasks)] = taskEntity.Task{
+		Title: "abc",
+		Body:  "def",
 	}
+	tasks[len(tasks)] = taskEntity.Task{
+		Title: "hello",
+		Body:  "world",
+	}
+	tasks[len(tasks)] = taskEntity.Task{
+		Title: "my third",
+		Body:  "card",
+	}
+
 	return &TaskService{
 		tasks: tasks,
 	}
