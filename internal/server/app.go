@@ -1,27 +1,32 @@
 package server
 
 import (
-	indexController "go-todo/internal/api/index"
-	taskController "go-todo/internal/api/task"
-	taskService "go-todo/internal/service/task"
+	taskHandler "go-todo/internal/handler/task"
+	taskRepo "go-todo/internal/repository/task"
+	"go-todo/web/views"
 	"net/http"
-)
 
-type Controller interface{}
+	"github.com/a-h/templ"
+)
 
 type Server struct {
 	Mux *http.ServeMux
 }
 
 func NewServer(mux *http.ServeMux) *Server {
-	indexCon := indexController.NewIndexController()
+	taskRepo := taskRepo.NewTaskRepository()
+	taskHan := taskHandler.NewTaskHandler(taskRepo)
 
-	taskSer := taskService.NewTaskService()
-	taskCon := taskController.NewTaskController(taskSer)
+	// Static files
+	fs := http.FileServer(http.Dir("web/static"))
+	mux.Handle("/static/", http.StripPrefix("/static/", fs))
+	// Index
+	mux.Handle("/", templ.Handler(views.Index()))
 
-	mux.HandleFunc("GET /", indexCon.ServeIndex)
-	mux.HandleFunc("GET /task/all", taskCon.GetAllTasks)
-	mux.HandleFunc("POST /task/create", taskCon.CreateTask)
+	// Tasks
+	mux.HandleFunc("/task/all", taskHan.GetAll)
+	mux.HandleFunc("POST /task/create", taskHan.Create)
+	mux.HandleFunc("DELETE /task/delete", taskHan.Delete)
 
 	return &Server{
 		Mux: http.NewServeMux(),

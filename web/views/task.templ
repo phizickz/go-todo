@@ -1,12 +1,20 @@
 package views
 
-import "go-todo/internal/entities/task"
+import (
+	"fmt"
+	"go-todo/internal/entities/task"
+)
 
 templ Tasks(tasks []task.Task) {
 	for _, t := range tasks {
 		<div class="card mt-2">
-			<div class="card-header">
-				<h1>{ t.Title }</h1>
+			<div class="card-header" value={ fmt.Sprintf("%d", t.ID) }>
+				<span>{ t.Title }</span>
+				<i
+					class="bi bi-x float-end close-icon"
+					hx-delete="/task/delete"
+					hx-include="closest div"
+				></i>
 			</div>
 			<div class="card-body">
 				{ t.Body }
