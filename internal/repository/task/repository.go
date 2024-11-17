@@ -10,7 +10,9 @@ type TaskRepository struct {
 	counter int
 }
 
-// func (tr *TaskRepository) Create(title string, body string) error {
+func (tr *TaskRepository) Update(id int, task taskEntity.Task) {
+}
+
 func (tr *TaskRepository) Create(task taskEntity.Task) error {
 	tr.tasks = append(tr.tasks, taskEntity.Task{
 		ID:    tr.counter,

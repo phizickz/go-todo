@@ -7,6 +7,7 @@ import (
 	"go-todo/web/views"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/a-h/templ"
 )
@@ -15,11 +16,15 @@ type TaskRepository interface {
 	RetrieveAll() []taskEntity.Task
 	Create(task taskEntity.Task) error
 	Retrieve(id int) (taskEntity.Task, error)
-	// Update(id int, task taskEntity.Task)
+	Update(id int, task taskEntity.Task)
 	Delete(id int)
 }
 type TaskHandler struct {
 	TaskRepository *taskRepo.TaskRepository
+}
+
+func (th *TaskHandler) Update(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r)
 }
 
 func (th *TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
@@ -31,7 +36,7 @@ func (th *TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 	); err != nil {
 		log.Fatal(err)
 	}
-	w.Header().Set("HX-Trigger", "task-created")
+	w.Header().Set("HX-Trigger", "task-updated")
 	w.WriteHeader(http.StatusOK)
 }
 
@@ -40,10 +45,21 @@ func (th *TaskHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 	handler.ServeHTTP(w, r)
 }
 
-func (th *TaskHandler) Delete(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(r)
-	fmt.Println(r.Body)
-	fmt.Println(r.FormValue("value"))
+func (th *TaskHandler) DeleteById(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	if id < 0 {
+		log.Fatal("Invalid ID", id)
+		return
+	}
+
+	th.TaskRepository.Delete(id)
+
+	w.Header().Set("HX-Trigger", "task-updated")
+	w.WriteHeader(http.StatusOK)
 }
 
 func NewTaskHandler(repo *taskRepo.TaskRepository) *TaskHandler {
