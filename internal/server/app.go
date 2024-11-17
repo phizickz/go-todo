@@ -26,8 +26,9 @@ func NewServer(mux *http.ServeMux) *Server {
 	// Tasks
 	mux.HandleFunc("/task/all", taskHan.GetAll)
 	mux.HandleFunc("POST /task/create", taskHan.Create)
+	mux.HandleFunc("GET /task/update/{id}", taskHan.Edit)
 	mux.HandleFunc("POST /task/update/{id}", taskHan.Update)
-	mux.HandleFunc("DELETE /task/delete/{id}", taskHan.DeleteById)
+	mux.HandleFunc("DELETE /task/update/{id}", taskHan.Delete)
 
 	return &Server{
 		Mux: http.NewServeMux(),

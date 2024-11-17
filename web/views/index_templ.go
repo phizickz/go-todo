@@ -58,7 +58,7 @@ func indexBody() templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<body data-bs-theme=\"dark\"><div class=\"container\"><h1>Welcome to My Go App</h1><div class=\"row col-8\"><div class=\"card\"><div class=\"card-body\"><form><input type=\"text\" name=\"title\" placeholder=\"Title\"> <input type=\"text\" name=\"body\" placeholder=\"Body\"> <button hx-post=\"/task/create\" hx-swap=\"none\">Submit</button></form></div></div></div><div class=\"row col-8\" id=\"todos-list\" hx-get=\"/task/all\" hx-trigger=\"load, task-updated from:body\"></div></div></body>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<body data-bs-theme=\"dark\"><div class=\"container\"><h1>Welcome to My Go App</h1><div class=\"row col-8 g-0\"><div class=\"card\"><div class=\"card-body\"><form><input type=\"text\" name=\"title\" placeholder=\"Title\"> <input type=\"text\" name=\"body\" placeholder=\"Body\"> <button hx-post=\"/task/create\" hx-swap=\"none\">Submit</button></form></div></div></div><div class=\"row col-8 g-0\" id=\"todos-list\" hx-get=\"/task/all\" hx-trigger=\"load, task-updated from:body\"></div></div></body>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -7,17 +7,21 @@ import (
 
 templ Tasks(tasks []task.Task) {
 	for _, t := range tasks {
-		<div class="card mt-2">
+		<div
+			hx-target="this"
+			hx-swap="outerHTML"
+			class="card mt-2"
+		>
 			<div class="card-header d-flex justify-content-between">
 				<span>{ t.Title }</span>
 				<div>
 					<i
 						class="bi bi-pencil pointer px-2"
-						hx-post={ fmt.Sprintf("/task/update/%d", t.ID) }
+						hx-get={ fmt.Sprintf("/task/update/%d", t.ID) }
 					></i>
 					<i
 						class="bi bi-x pointer"
-						hx-delete={ fmt.Sprintf("/task/delete/%d", t.ID) }
+						hx-delete={ fmt.Sprintf("/task/update/%d", t.ID) }
 						hx-confirm={ fmt.Sprintf("Are you sure you want to delete task %v?", t.Title) }
 					></i>
 				</div>
@@ -27,4 +31,24 @@ templ Tasks(tasks []task.Task) {
 			</div>
 		</div>
 	}
+}
+
+templ TaskEdit(task task.Task) {
+	<form
+		hx-post={ fmt.Sprintf("/task/update/%d", task.ID) }
+	>
+		<div class="card mt-2">
+			<div class="card-header d-flex justify-content-between">
+				<input type="text" name="title" value={ task.Title }/>
+				<div>
+					<button type="submit">
+						Save
+					</button>
+				</div>
+			</div>
+			<div class="card-body">
+				<input type="text" name="body" value={ task.Body }/>
+			</div>
+		</div>
+	</form>
 }

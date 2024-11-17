@@ -16,15 +16,53 @@ type TaskRepository interface {
 	RetrieveAll() []taskEntity.Task
 	Create(task taskEntity.Task) error
 	Retrieve(id int) (taskEntity.Task, error)
-	Update(id int, task taskEntity.Task)
+	Update(task taskEntity.Task)
 	Delete(id int)
 }
 type TaskHandler struct {
 	TaskRepository *taskRepo.TaskRepository
 }
 
+func (th *TaskHandler) Edit(w http.ResponseWriter, r *http.Request) {
+	id, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	if id < 0 {
+		log.Fatal("Invalid ID", id)
+		return
+	}
+	task, err := th.TaskRepository.Retrieve(id)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	handler := templ.Handler(views.TaskEdit(task))
+	handler.ServeHTTP(w, r)
+}
+
 func (th *TaskHandler) Update(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(r)
+	r.ParseForm()
+	id, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	if id < 0 {
+		log.Fatal("Invalid ID", id)
+		return
+	}
+	task := taskEntity.Task{
+		ID:    id,
+		Title: r.Form["title"][0],
+		Body:  r.Form["body"][0],
+	}
+
+	th.TaskRepository.Update(task)
+	fmt.Println("Task updated:", id)
+	w.Header().Set("HX-Trigger", "task-updated")
+	w.WriteHeader(http.StatusOK)
 }
 
 func (th *TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
@@ -36,6 +74,7 @@ func (th *TaskHandler) Create(w http.ResponseWriter, r *http.Request) {
 	); err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println("Task created")
 	w.Header().Set("HX-Trigger", "task-updated")
 	w.WriteHeader(http.StatusOK)
 }
@@ -45,7 +84,7 @@ func (th *TaskHandler) GetAll(w http.ResponseWriter, r *http.Request) {
 	handler.ServeHTTP(w, r)
 }
 
-func (th *TaskHandler) DeleteById(w http.ResponseWriter, r *http.Request) {
+func (th *TaskHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(r.PathValue("id"))
 	if err != nil {
 		log.Fatal(err)
@@ -58,6 +97,7 @@ func (th *TaskHandler) DeleteById(w http.ResponseWriter, r *http.Request) {
 
 	th.TaskRepository.Delete(id)
 
+	fmt.Println("Task deleted")
 	w.Header().Set("HX-Trigger", "task-updated")
 	w.WriteHeader(http.StatusOK)
 }

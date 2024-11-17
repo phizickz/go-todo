@@ -10,7 +10,12 @@ type TaskRepository struct {
 	counter int
 }
 
-func (tr *TaskRepository) Update(id int, task taskEntity.Task) {
+func (tr *TaskRepository) Update(task taskEntity.Task) {
+	for i, t := range tr.tasks {
+		if task.ID == t.ID {
+			tr.tasks[i] = task
+		}
+	}
 }
 
 func (tr *TaskRepository) Create(task taskEntity.Task) error {
