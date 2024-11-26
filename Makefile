@@ -23,6 +23,21 @@ live/sync_assets:
 	--build.include_dir "assets" \
 	--build.include_ext "js,css"
 
+live/db:
+	docker run --name go-app-db \
+		-e POSTGRES_USER=go_user \
+		-e POSTGRES_PASSWORD=go_password \
+		-e POSTGRES_DB=go_app_db \
+		-p 5432:5432 \
+		-d postgres:16
+
+# Stop the PostgreSQL database
+live/db_stop:
+	docker stop go-app-db || true
+	docker rm go-app-db || true
+
+# Rebuild the database (useful for migrations or clean state testing)
+live/db_reset: live/db_stop live/db
 # start all 5 watch processes in parallel.
 live: 
-	make -j3 live/templ live/server live/sync_assets
+	make -j4 live/templ live/server live/sync_assets live/db_reset
