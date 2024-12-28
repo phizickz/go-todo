@@ -1,12 +1,15 @@
 package task
 
 import (
+	"database/sql"
 	"errors"
+	"fmt"
 	taskEntity "go-todo/internal/entities/task"
 )
 
 type TaskRepository struct {
 	tasks   []taskEntity.Task
+	db      *sql.DB
 	counter int
 }
 
@@ -39,7 +42,26 @@ func (tr *TaskRepository) Retrieve(id int) (taskEntity.Task, error) {
 }
 
 func (tr *TaskRepository) RetrieveAll() []taskEntity.Task {
-	return tr.tasks
+	query := "SELECT * FROM tasks"
+	rows, err := tr.db.Query(query)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer rows.Close()
+
+	var tasks []taskEntity.Task
+	for rows.Next() {
+		var task taskEntity.Task
+		_ = rows.Scan(&task.ID, &task.Title, &task.Body)
+		// if err := rows.Scan(&task.ID, &task.Title, &task.Body); err != nil {
+		// 	return nil, err
+		// }
+		tasks = append(tasks, task)
+	}
+	// if err := rows.Err(); err != nil {
+	//   return nil, err
+	// }
+	return tasks
 }
 
 func (tr *TaskRepository) Delete(id int) error {
@@ -52,7 +74,7 @@ func (tr *TaskRepository) Delete(id int) error {
 	return nil
 }
 
-func NewTaskRepository() *TaskRepository {
+func NewTaskRepository(db *sql.DB) *TaskRepository {
 	tasks := []taskEntity.Task{
 		{
 			ID:    0,
@@ -79,5 +101,6 @@ func NewTaskRepository() *TaskRepository {
 	return &TaskRepository{
 		tasks:   tasks,
 		counter: len(tasks),
+		db:      db,
 	}
 }

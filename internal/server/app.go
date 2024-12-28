@@ -1,11 +1,16 @@
 package server
 
 import (
+	"database/sql"
+	"fmt"
 	taskHandler "go-todo/internal/handler/task"
 	taskRepo "go-todo/internal/repository/task"
 	"go-todo/web/views"
+	"log"
 	"net/http"
+
 	"github.com/a-h/templ"
+	_ "github.com/lib/pq"
 )
 
 type Server struct {
@@ -13,20 +18,20 @@ type Server struct {
 }
 
 func NewServer(mux *http.ServeMux) *Server {
-	// host := "localhost"
-	// port := 5432
-	// user := "go_user"
-	// password := "go_password"
-	// dbname := "go_app_db"
-	// psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-	// 	host, port, user, password, dbname)
-	// db, err := sql.Open("postgres", psqlInfo)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// defer db.Close()
+	host := "localhost"
+	port := 5432
+	user := "go_user"
+	password := "go_password"
+	dbname := "go_app_db"
+	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		host, port, user, password, dbname)
+	db, err := sql.Open("postgres", psqlInfo)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
 
-	taskRepo := taskRepo.NewTaskRepository()
+	taskRepo := taskRepo.NewTaskRepository(db)
 	taskHan := taskHandler.NewTaskHandler(taskRepo)
 
 	// Static files

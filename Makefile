@@ -29,6 +29,7 @@ live/db:
 		-e POSTGRES_PASSWORD=go_password \
 		-e POSTGRES_DB=go_app_db \
 		-p 5432:5432 \
+		-v ./sqlscripts/init:/docker-entrypoint-initdb.d \
 		-d postgres:16
 
 # Stop the PostgreSQL database
@@ -40,4 +41,4 @@ live/db_stop:
 live/db_reset: live/db_stop live/db
 # start all 5 watch processes in parallel.
 live: 
-	make -j4 live/templ live/server live/sync_assets live/db_reset
+	make -j4 live/templ live/server live/sync_assets
