@@ -1,7 +1,7 @@
   CREATE TABLE tasks (
     id SERIAL PRIMARY KEY,
-    body TEXT NOT NULL,
-    title TEXT NOT NULL
+    title TEXT NOT NULL,
+    body TEXT NOT NULL
 );
 
 INSERT INTO tasks (title, body)
